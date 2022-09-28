@@ -1,23 +1,22 @@
-language: generic 
 sudo: required
 services: 
   -docker
 
 before_install:
-  - docker build -t ricardoflnsousa/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t bolcha/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true ricardoflnsousa/react-test npm test
+  - docker run -e CI=true bolcha/react-test npm test
 
 after_success:
-  - docker build -t ricardoflnsousa/multi-client ./client
-  - docker build -t ricardoflnsousa/multi-nginx ./nginx
-  - docker build -t ricardoflnsousa/multi-server ./server
-  - docker build -t ricardoflnsousa/multi-worker ./worker
+  - docker build -t bolcha/multi-client ./client
+  - docker build -t bolcha/multi-nginx ./nginx
+  - docker build -t bolcha/multi-server ./server
+  - docker build -t bolcha/multi-worker ./worker
   # Log in to docker cli
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take images and push them to docker hub
-  - docker push ricardoflnsousa/multi-client
-  - docker push ricardoflnsousa/multi-nginx
-  - docker push ricardoflnsousa/multi-server
-  - docker push ricardoflnsousa/multi-worker
+  - docker push bolcha/multi-client
+  - docker push bolcha/multi-nginx
+  - docker push bolcha/multi-server
+  - docker push bolcha/multi-worker
